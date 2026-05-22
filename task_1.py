@@ -5,7 +5,7 @@ INPUT_FILE = "domains.txt"
 OUTPUT_FILE = "output.csv"
 TIMEOUT = 10
 
-# 1. Define the headers we want to check for
+
 SECURITY_HEADERS = [
     "Content-Security-Policy",
     "X-Frame-Options",
@@ -14,7 +14,7 @@ SECURITY_HEADERS = [
 ]
 
 def check_domain(domain):
-    # Try HTTPS first (modern standard) then HTTP
+    
     urls = [f"https://{domain}", f"http://{domain}"]
     last_error = "Unknown Error"
 
@@ -26,12 +26,11 @@ def check_domain(domain):
                 allow_redirects=True
             )
 
-            # 2. Logic to find missing headers
-            # We convert found headers to lowercase to ensure a fair comparison
+            
             found_headers_lower = [h.lower() for h in response.headers.keys()]
             missing = [h for h in SECURITY_HEADERS if h.lower() not in found_headers_lower]
 
-            # 3. Return the data with the NEW KEY
+            
             return {
                 "Domain": domain,
                 "Site Reachable": "Yes",
@@ -44,7 +43,7 @@ def check_domain(domain):
         except requests.exceptions.RequestException as e:
             last_error = str(e)
 
-    # Return this if the domain is totally unreachable
+    
     return {
         "Domain": domain,
         "Site Reachable": "No",
@@ -56,12 +55,12 @@ def check_domain(domain):
 
 
 def main():
-    # Load your domains
+    
     try:
         with open(INPUT_FILE, "r") as f:
             domains = [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
-        print(f"❌ Error: {INPUT_FILE} not found. Please create it.")
+        print(f"Error: {INPUT_FILE} not found. Please create it.")
         return
 
     results = []
@@ -71,14 +70,14 @@ def main():
         result = check_domain(domain)
         results.append(result)
 
-    # 4. CRITICAL: The fieldnames list MUST include the new column name
+    
     with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as csvfile:
         fieldnames = [
             "Domain",
             "Site Reachable",
             "Final URL",
             "Response Status Code",
-            "Missing Security Headers",  # <--- THIS LINE ADDS THE COLUMN
+            "Missing Security Headers",  
             "Error"
         ]
         
@@ -86,7 +85,7 @@ def main():
         writer.writeheader()
         writer.writerows(results)
 
-    print(f"\n✅ Scan complete. Results saved to {OUTPUT_FILE}")
+    print(f"\nScan complete. Results saved to {OUTPUT_FILE}")
 
 
 if __name__ == "__main__":
