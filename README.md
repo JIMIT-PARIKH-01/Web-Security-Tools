@@ -15,6 +15,8 @@ toolkit — pure Python standard library, **GUI + CLI**, tests + CI.
 
 ---
 
+![demo](docs/demo.png)
+
 ## What's inside
 | Check | What it does |
 |---|---|
