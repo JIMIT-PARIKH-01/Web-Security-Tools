@@ -1,0 +1,2 @@
+# Web-Security-Tools uses the Python standard library only — no dependencies.
+# tkinter (for the GUI) ships with the standard CPython Windows installer.

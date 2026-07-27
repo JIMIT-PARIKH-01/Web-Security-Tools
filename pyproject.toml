@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "web-security-tools"
+version = "1.0.0"
+description = "Dependency-free web-security auditor: headers, CSP, clickjacking, disclosure files."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "Jimit Parikh" }]
+keywords = ["security", "web", "csp", "headers", "clickjacking", "audit"]
+
+[project.urls]
+Homepage = "https://github.com/JIMIT-PARIKH-01/Web-Security-Tools"
+
+[project.scripts]
+websectools = "websectools.cli:main"
+
+[tool.setuptools]
+packages = ["websectools"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
